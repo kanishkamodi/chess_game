@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Utility Hub</title>
+    <style>
+        /* ============================================
+           BASIC RESET AND ROOT STYLES
+           This removes default spacing and sets up colors
+        ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           HERO SECTION - Top banner with title
+        ============================================ */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            /* Anti-gravity animation applied here */
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite 0.5s;
+        }
+
+        .hero-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite 1s;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* ============================================
+           ANTI-GRAVITY FLOATING ANIMATION
+           This makes elements gently move up and down
+        ============================================ */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* ============================================
+           SECTION CONTAINER - Wrapper for all sections
+        ============================================ */
+        .section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* ============================================
+           CARD GRID - Layout for floating cards
+        ============================================ */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* ============================================
+           FLOATING CARD STYLE
+           Each card floats and has hover effects
+        ============================================ */
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            /* Each card floats at different speeds */
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Different animation delays for varied floating */
+        .card:nth-child(1) { animation-delay: 0s; }
+        .card:nth-child(2) { animation-delay: 0.3s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
+        .card:nth-child(4) { animation-delay: 0.9s; }
+        .card:nth-child(5) { animation-delay: 1.2s; }
+        .card:nth-child(6) { animation-delay: 1.5s; }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .card-btn {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card-btn:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        /* ============================================
+           TOOLS SECTION - Interactive student tools
+        ============================================ */
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .tool-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .tool-box h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        /* To-Do List Styles */
+        .todo-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .todo-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .todo-item {
+            background: #f0f0f0;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .todo-item:hover {
+            background: #e0e0e0;
+            transform: translateX(5px);
+        }
+
+        .delete-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #ff3838;
+            transform: scale(1.1);
+        }
+
+        /* Timer Styles */
+        .timer-display {
+            font-size: 3rem;
+            text-align: center;
+            margin: 20px 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .timer-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .timer-btn {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .timer-btn:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
+        }
+
+        /* ============================================
+           CONTACT SECTION - Feedback form
+        ============================================ */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #764ba2;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN - Mobile adjustments
+        ============================================ */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timer-display {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         HERO SECTION - Main landing area
+    ============================================ -->
+    <section class="hero">
+        <h1>🎓 Student Utility Hub</h1>
+        <p>Your one-stop platform for study resources, tools, and career guidance</p>
+        <button class="hero-btn" onclick="scrollToSection()">Explore Now</button>
+    </section>
+
+    <!-- ============================================
+         STUDY RESOURCES SECTION
+    ============================================ -->
+    <section class="section" id="resources">
+        <h2 class="section-title">📚 Study Resources</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>📐 Mathematics</h3>
+                <p>Algebra, calculus, geometry, and problem-solving techniques for all levels.</p>
+                <button class="card-btn" onclick="showAlert('Mathematics')">Learn More</button>
+            </div>
+            <div class="card">
+                <h3>🔬 Science</h3>
+                <p>Physics, chemistry, biology concepts with interactive examples and experiments.</p>
+                <button class="card-btn" onclick="showAlert('Science')">Learn More</button>
+            </div>
+            <div class="card">
+                <h3>💻 Computer Science</h3>
+                <p>Programming fundamentals, algorithms, data structures, and software development.</p>
+                <button class="card-btn" onclick="showAlert('Computer Science')">Learn More</button>
+            </div>
+            <div class="card">
+                <h3>🌍 Social Studies</h3>
+                <p>History, geography, civics, and understanding global cultures and societies.</p>
+                <button class="card-btn" onclick="showAlert('Social Studies')">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         CODING HELP SECTION
+    ============================================ -->
+    <section class="section">
+        <h2 class="section-title">💡 Coding Basics</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>HTML Basics</h3>
+                <p>Learn the building blocks of web pages: tags, elements, and structure.</p>
+                <button class="card-btn" onclick="showAlert('HTML')">Start Learning</button>
+            </div>
+            <div class="card">
+                <h3>CSS Styling</h3>
+                <p>Make your websites beautiful with colors, layouts, and animations.</p>
+                <button class="card-btn" onclick="showAlert('CSS')">Start Learning</button>
+            </div>
+            <div class="card">
+                <h3>JavaScript</h3>
+                <p>Add interactivity to your websites with programming logic and functions.</p>
+                <button class="card-btn" onclick="showAlert('JavaScript')">Start Learning</button>
+            </div>
+            <div class="card">
+                <h3>Python</h3>
+                <p>Beginner-friendly programming language perfect for learning coding fundamentals.</p>
+                <button class="card-btn" onclick="showAlert('Python')">Start Learning</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         STUDENT TOOLS SECTION - Interactive tools
+    ============================================ -->
+    <section class="section">
+        <h2 class="section-title">🛠️ Student Tools</h2>
+        <div class="tools-container">
+            
+            <!-- TO-DO LIST TOOL -->
+            <div class="tool-box">
+                <h3>✅ To-Do List</h3>
+                <input type="text" class="todo-input" id="todoInput" placeholder="Enter your task...">
+                <button class="card-btn" onclick="addTask()">Add Task</button>
+                <ul class="todo-list" id="todoList">
+                    <!-- Tasks will appear here dynamically -->
+                </ul>
+            </div>
+
+            <!-- STUDY TIMER TOOL -->
+            <div class="tool-box">
+                <h3>⏱️ Study Timer</h3>
+                <div class="timer-display" id="timerDisplay">25:00</div>
+                <div class="timer-buttons">
+                    <button class="timer-btn" onclick="startTimer()">Start</button>
+                    <button class="timer-btn" onclick="pauseTimer()">Pause</button>
+                    <button class="timer-btn" onclick="resetTimer()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         CAREER & EXAM GUIDANCE SECTION
+    ============================================ -->
+    <section class="section">
+        <h2 class="section-title">🎯 Career & Exam Guidance</h2>
+        <div class="card-grid">
+            <div class="card">
+                <h3>📝 Exam Preparation</h3>
+                <p>Tips, strategies, and study plans for acing your exams with confidence.</p>
+                <button class="card-btn" onclick="showAlert('Exam Prep')">Get Tips</button>
+            </div>
+            <div class="card">
+                <h3>🚀 Career Paths</h3>
+                <p>Explore different career options and find your passion in various fields.</p>
+                <button class="card-btn" onclick="showAlert('Career')">Explore</button>
+            </div>
+            <div class="card">
+                <h3>💼 Interview Prep</h3>
+                <p>Common interview questions, tips, and techniques to land your dream job.</p>
+                <button class="card-btn" onclick="showAlert('Interview')">Prepare</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         CONTACT & FEEDBACK SECTION
+    ============================================ -->
+    <section class="section">
+        <h2 class="section-title">📧 Contact & Feedback</h2>
+        <div class="contact-form">
+            <form onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        /* ============================================
+           JAVASCRIPT CODE - All interactive functionality
+        ============================================ */
+
+        // Smooth scroll function when "Explore Now" is clicked
+        function scrollToSection() {
+            document.getElementById('resources').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Show alert for card buttons
+        function showAlert(subject) {
+            alert('Opening ' + subject + ' resources! In a real website, this would link to detailed content.');
+        }
+
+        /* ============================================
+           TO-DO LIST FUNCTIONALITY
+        ============================================ */
+        function addTask() {
+            // Get the input field value
+            var taskInput = document.getElementById('todoInput');
+            var taskText = taskInput.value.trim();
+
+            // Check if input is not empty
+            if (taskText === '') {
+                alert('Please enter a task!');
+                return;
+            }
+
+            // Get the list where tasks will appear
+            var todoList = document.getElementById('todoList');
+
+            // Create a new list item (li element)
+            var listItem = document.createElement('li');
+            listItem.className = 'todo-item';
+            
+            // Create text node for the task
+            var taskSpan = document.createElement('span');
+            taskSpan.textContent = taskText;
+            
+            // Create delete button
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'delete-btn';
+            deleteButton.onclick = function() {
+                // Remove the task when delete is clicked
+                todoList.removeChild(listItem);
+            };
+
+            // Add task text and delete button to the list item
+            listItem.appendChild(taskSpan);
+            listItem.appendChild(deleteButton);
+
+            // Add the complete list item to the todo list
+            todoList.appendChild(listItem);
+
+            // Clear the input field
+            taskInput.value = '';
+        }
+
+        // Allow adding task by pressing Enter key
+        document.getElementById('todoInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        });
+
+        /* ============================================
+           STUDY TIMER FUNCTIONALITY (25-minute Pomodoro)
+        ============================================ */
+        var timerInterval; // Variable to store timer
+        var timeLeft = 1500; // 25 minutes in seconds (25 * 60)
+        var isRunning = false; // Track if timer is running
+
+        function startTimer() {
+            // Don't start if already running
+            if (isRunning) return;
+            
+            isRunning = true;
+
+            // Run this code every 1 second (1000 milliseconds)
+            timerInterval = setInterval(function() {
+                // Decrease time by 1 second
+                timeLeft--;
+
+                // Update the display
+                updateTimerDisplay();
+
+                // Check if time is up
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    alert('Time is up! Take a break! 🎉');
+                    resetTimer();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            timeLeft = 1500; // Reset to 25 minutes
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            // Calculate minutes and seconds
+            var minutes = Math.floor(timeLeft / 60);
+            var seconds = timeLeft % 60;
+
+            // Add leading zero if needed (e.g., 5:05 instead of 5:5)
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+
+            // Update the display
+            document.getElementById('timerDisplay').textContent = minutes + ':' + seconds;
+        }
+
+        /* ============================================
+           CONTACT FORM SUBMISSION
+        ============================================ */
+        function submitForm(event) {
+            // Prevent page reload on form submit
+            event.preventDefault();
+
+            // Get form values
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var message = document.getElementById('message').value;
+
+            // Show success message
+            alert('Thank you, ' + name + '! Your message has been received. We will contact you at ' + email);
+
+            // Clear the form
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('message').value = '';
+        }
+    </script>
+
+</body>
+</html>
